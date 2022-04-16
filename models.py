@@ -13,12 +13,3 @@ class User(_database.Base):
 
     def verify_password(self, password):
         return _hash.argon2.verify(password, self.password_hash)
-
-# class Post(_database.Base):
-#     __tablename__ = "posts"
-#     id = _sql.Column(_sql.Integer, primary_key=True, index=True)
-#     owner_id = _sql.Column(_sql.Integer, _sql.ForeignKey("users.id"))
-#     post_text = _sql.Column(_sql.String, index=True)
-#     date_created = _sql.Column(_sql.DateTime, default=_dt.datetime.utcnow)
-
-#     owner = _orm.relationship("User", back_populates="posts")

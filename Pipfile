@@ -20,6 +20,7 @@ bcrypt = "*"
 locust = "*"
 argon2-cffi = "*"
 asyncpg = "*"
+fastapi-profiler = "*"
 
 [dev-packages]
 

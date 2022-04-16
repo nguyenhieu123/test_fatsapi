@@ -5,7 +5,6 @@ import passlib.hash as _hash
 import email_validator as _email_check
 import fastapi as _fastapi
 import fastapi.security as _security
-from sqlalchemy.future import select
 import data_base as _database
 import schemas as _schemas
 import models as _models
@@ -22,7 +21,7 @@ async def create_database():
 
 
 async def get_db():
-    db = _database.async_session()
+    db = _database.SessionLocal()
     try:
         yield db
     finally:
@@ -30,11 +29,8 @@ async def get_db():
 
 
 async def get_user_by_email(email: str, db: _orm.Session):
-    data = db.execute(select(_models.User).filter(
-        _models.User.email == email))
-
-    data = data.scalar_one_or_none()
-    return data
+    return db.query(_models.User).filter(
+        _models.User.email == email).first()
 
 
 async def create_user(user: _schemas.UserCreate, db: _orm.Session):
@@ -51,7 +47,7 @@ async def create_user(user: _schemas.UserCreate, db: _orm.Session):
 
     db.add(user_obj)
     db.commit()
-    await db.refresh(user_obj)
+    db.refresh(user_obj)
     return user_obj
 
 
