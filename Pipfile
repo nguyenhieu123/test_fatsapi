@@ -18,6 +18,8 @@ datetime = "*"
 alembic = "*"
 bcrypt = "*"
 locust = "*"
+argon2-cffi = "*"
+asyncpg = "*"
 
 [dev-packages]
 

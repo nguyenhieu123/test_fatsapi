@@ -21,6 +21,11 @@ class User(_UserBase):
     class Config:
         orm_mode = True
 
+
+class UserLogin(_UserBase):
+    password: str
+
+
 # class _PostBase(_pydantic.BaseModel):
 #     post_text: str
 

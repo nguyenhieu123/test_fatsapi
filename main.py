@@ -23,16 +23,15 @@ async def create_user(
     # user = _services.create_user(user=user, db=db)
     user =  await _services.create_user(user=user, db=db)
     # return _services.create_token(user=user)
-    return await _services.create_token(user=user)
+    return _services.create_token(user=user)
 
 
 @app.post("/api/token")
 async def generate_token(
-                        form_data: _security.OAuth2PasswordRequestForm =
-                        _fastapi.Depends(),
+                        form_data: _schemas.UserLogin,
                         db: _orm.Session = _fastapi.Depends(_services.get_db)):
     user = await _services.authenticate_user(
-        email=form_data.username, password=form_data.password, db=db)
+        email=form_data.email, password=form_data.password, db=db)
 
     if not user:
         raise _fastapi.HTTPException(
